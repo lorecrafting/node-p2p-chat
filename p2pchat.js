@@ -17,9 +17,11 @@ const server = net.createServer(socket => {
   const peerIp = socketAddr[3];
 
   peerList.push(peerIp);
+
   console.log("Connected: ", socketAddr);
   socket.on("data", data => {
     const msg = data.toString();
+    console.log(msg);
     peerList.forEach(peerIp => {
       net.createConnection(6969, peerIp, socket => {
         socket.write("PING!");

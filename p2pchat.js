@@ -14,6 +14,7 @@ console.log("Initial peerList: ", peerList);
 const server = net.createServer(socket => {
   const socketAddr = socket.address().address.split(":");
   const peerIp = socketAddr[3];
+  console.log(`Peer connected from ${peerIp}`);
 
   peerList[peerIp] = true;
   Object.keys(peerList).forEach(peerAddr => {

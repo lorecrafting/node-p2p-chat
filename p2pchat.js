@@ -9,8 +9,8 @@ if (ENTRY_PEER) {
   isGenesisNode = false;
   peerList[ENTRY_PEER] = true;
 }
-peerList.forEach(peerIp => {
-  console.log("peerIp: ", peerIp);
+Object.keys(peerList).forEach(peerIp => {
+  console.log("peerIp: ", peerList[peerIp]);
 });
 const server = net.createServer(socket => {
   const socketAddr = socket.address().address.split(":");

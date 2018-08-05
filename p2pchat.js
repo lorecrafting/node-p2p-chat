@@ -17,6 +17,7 @@ const server = net.createServer(socket => {
   const peerIp = socketAddr[3];
 
   peerList.push(peerIp);
+  socket.write("You have connected to node-p2p-chat system...");
 
   console.log("Connected: ", socketAddr);
   socket.on("data", data => {

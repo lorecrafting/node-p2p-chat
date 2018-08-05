@@ -9,7 +9,9 @@ if (ENTRY_PEER) {
   isGenesisNode = false;
   peerList.push(ENTRY_PEER);
 }
-
+peerList.forEach(peerIp => {
+  console.log("peerIp: ", peerIp);
+});
 const server = net.createServer(socket => {
   const socketAddr = socket.address().address.split(":");
   const peerIp = socketAddr[3];
@@ -20,7 +22,7 @@ const server = net.createServer(socket => {
     const msg = data.toString();
     peerList.forEach(peerIp => {
       net.createConnection(6969, peerIp, socket => {
-        socket.write(msg);
+        socket.write("PING!");
       });
     });
   });

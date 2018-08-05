@@ -7,7 +7,7 @@ const peerList = {};
 
 if (ENTRY_PEER) {
   isGenesisNode = false;
-  peerList.push(ENTRY_PEER);
+  peerList[ENTRY_PEER] = true;
 }
 peerList.forEach(peerIp => {
   console.log("peerIp: ", peerIp);

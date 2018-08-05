@@ -1,6 +1,7 @@
 const net = require("net");
 
 const ENTRY_PEER = process.env.ENTRY_PEER;
+const PORT = process.env.PORT || 6969;
 
 let isGenesisNode = true;
 const peerList = {};
@@ -18,7 +19,7 @@ const server = net.createServer(socket => {
 
   peerList[peerIp] = true;
   Object.keys(peerList).forEach(peerAddr => {
-    net.createConnection(6060, peerList[peerAddr], socket => {
+    net.createConnection(PORT, peerList[peerAddr], socket => {
       socket.write(`/addpeer ${peerIp}`);
     });
   });
@@ -28,19 +29,20 @@ const server = net.createServer(socket => {
   console.log("Connected: ", socketAddr);
   socket.on("data", data => {
     const msg = data.toString();
+    console.log("Incoming msg: ", msg);
     if (msg.includes("/addpeer")) {
       const newPeerIp = msg.split(" ")[1];
       peerList[newPeerIp] = true;
     }
     console.log(msg);
     Object.keys(peerList).forEach(peerIp => {
-      net.createConnection(6969, peerList[peerIp], socket => {
+      net.createConnection(PORT, peerList[peerIp], socket => {
         socket.write("PING!");
       });
     });
   });
 });
 
-server.listen(6969, () => {
-  console.log("PEER LISTENING ON 6969...");
+server.listen(PORT, () => {
+  console.log(`PEER LISTENING ON ${PORT}...`);
 });
